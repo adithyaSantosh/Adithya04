@@ -1,0 +1,39 @@
+import pandas as pd 
+df = pd.read_csv("heart_disease_data.csv")
+df
+df.tail()
+df.shape
+df.isnull().sum()
+df.describe()
+df['target'].value_counts()
+X = df.drop(columns='target',axis=1)
+Y = df['target']
+from sklearn.model_selection import train_test_split
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, stratify=Y, random_state=2)
+X_train.shape
+X_test.shape
+Y_train.shape
+Y_test.shape
+from sklearn.linear_model import LogisticRegression
+model = LogisticRegression()
+model.fit(X_train,Y_train) 
+from sklearn.metrics import accuracy_score
+X_train_prediction = model.predict(X_train)
+training_data_accuracy = accuracy_score(X_train_prediction, Y_train)
+print(f'This is the accuracy score on training data {training_data_accuracy}')
+import numpy as np 
+target = (62,0,0,140,268,0,0,160,0,3.6,0,2,2)
+# Converting the input list to numpy array.
+target = np.array(target)
+print(target)
+print(type(target))
+target = target.reshape(1,-1) 
+target 
+
+prediction = model.predict(target)
+
+if prediction[0] == 0 : 
+    print("Good News Patient does'nt have heart disease")
+else: 
+    print("Oh! Patient should visit the doctor") 
+    
